@@ -9,12 +9,13 @@ const simpleCharsetRegExp = /^\s*([^\s;]+)\s*(?:;(.*))?$/;
  * Parse the Accept-Charset header.
  * @private
  */
+type PossiblyParsedCharset = (ParsedCharset | string)[];
 
-function parseAcceptCharset(accept: string): ParsedCharset[] {
-  var accepts = accept.split(',');
+function parseAcceptCharset(accept: string): PossiblyParsedCharset[] {
+  const accepts: any = accept.split(',');
 
   for (var i = 0, j = 0; i < accepts.length; i++) {
-    var charset = parseCharset(accepts[i].trim(), i);
+    const charset = parseCharset(accepts[i].trim(), i);
 
     if (charset) {
       accepts[j++] = charset;
@@ -24,7 +25,7 @@ function parseAcceptCharset(accept: string): ParsedCharset[] {
   // trim accepts
   accepts.length = j;
 
-  return accepts;
+  return accepts as any;
 }
 
 /**
@@ -38,15 +39,15 @@ interface ParsedCharset {
 }
 
 function parseCharset(str: string, i: number): ParsedCharset | null {
-  var match = simpleCharsetRegExp.exec(str);
+  const match = simpleCharsetRegExp.exec(str);
   if (!match) return null;
 
-  var charset = match[1];
-  var q = 1;
+  const charset = match[1];
+  let q = 1;
   if (match[2]) {
-    var params = match[2].split(';')
-    for (var j = 0; j < params.length; j++) {
-      var p = params[j].trim().split('=');
+    const params = match[2].split(';')
+    for (let j = 0; j < params.length; j++) {
+      const p = params[j].trim().split('=');
       if (p[0] === 'q') {
         q = parseFloat(p[1]);
         break;
@@ -66,11 +67,11 @@ function parseCharset(str: string, i: number): ParsedCharset | null {
  * @private
  */
 
-function getCharsetPriority(charset: string, accepted: string[], index: number) {
-  var priority = {o: -1, q: 0, s: 0};
+function getCharsetPriority(charset: string, accepted: ParsedCharset[], index: number) {
+  let priority = {o: -1, q: 0, s: 0};
 
-  for (var i = 0; i < accepted.length; i++) {
-    var spec = specify(charset, accepted[i], index);
+  for (let i = 0; i < accepted.length; i++) {
+    const spec = specify(charset, accepted[i], index);
 
     if (spec && (priority.s - spec.s || priority.q - spec.q || priority.o - spec.o) < 0) {
       priority = spec;
@@ -93,7 +94,7 @@ interface Specificity {
 }
 
 function specify(charset: string, spec: ParsedCharset, index: number): Specificity | null {
-  var s = 0;
+  let s = 0;
   if(spec.charset.toLowerCase() === charset.toLowerCase()){
     s |= 1;
   } else if (spec.charset !== '*' ) {
@@ -115,7 +116,7 @@ function specify(charset: string, spec: ParsedCharset, index: number): Specifici
 
 export function preferredCharsets(accept?: string, provided?: string[]) {
   // RFC 2616 sec 14.2: no header = *
-  var accepts = parseAcceptCharset(accept === undefined ? '*' : accept || '');
+  const accepts = parseAcceptCharset(accept === undefined ? '*' : accept || '') as any;
 
   if (!provided) {
     // sorted list of all charsets
@@ -125,12 +126,12 @@ export function preferredCharsets(accept?: string, provided?: string[]) {
       .map(getFullCharset);
   }
 
-  var priorities = provided.map(function getPriority(type, index) {
+  const priorities = provided.map(function getPriority(type, index) {
     return getCharsetPriority(type, accepts, index);
-  });
+  }) as any;
 
   // sorted list of accepted charsets
-  return priorities.filter(isQuality).sort(compareSpecs).map(function getCharset(priority) {
+  return priorities.filter(isQuality).sort(compareSpecs).map(function getCharset(priority: any) {
     return provided[priorities.indexOf(priority)];
   });
 }
@@ -161,5 +162,3 @@ function getFullCharset(spec: ParsedCharset) {
 function isQuality(spec: Specificity) {
   return spec.q > 0;
 }
-
-export default preferredCharsets;

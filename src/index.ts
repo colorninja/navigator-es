@@ -1,4 +1,4 @@
-import {preferredCharsets} from './lib/charset';
+import {preferredCharsets} from './lib/charset.js';
 
 // var preferredEncodings = require('./lib/encoding')
 // var preferredLanguages = require('./lib/language')
@@ -18,7 +18,7 @@ export class Negotiator {
     }
 
     charsets(available?: string[]) {
-        return preferredCharsets(this.request.headers['accept-charset'], available);
+        return preferredCharsets(this.request.headers['accept-charset'] as any, available);
     }
 
     // encoding(available?: string[], opts?: unknown) {

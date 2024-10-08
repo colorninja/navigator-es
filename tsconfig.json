@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
-    "incremental": true,
-    "target": "es2017",
+    "target": "ES6",
     "outDir": "dist",
     "rootDir": "src",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "module": "ES6",
     "declaration": true,
     "strict": true,
