@@ -1,14 +1,5 @@
-/**
- * Module variables.
- * @private
- */
-
 const simpleCharsetRegExp = /^\s*([^\s;]+)\s*(?:;(.*))?$/;
 
-/**
- * Parse the Accept-Charset header.
- * @private
- */
 type PossiblyParsedCharset = (ParsedCharset | string)[];
 
 function parseAcceptCharset(accept: string): PossiblyParsedCharset[] {
@@ -162,3 +153,5 @@ function getFullCharset(spec: ParsedCharset) {
 function isQuality(spec: Specificity) {
   return spec.q > 0;
 }
+
+export default preferredCharsets;

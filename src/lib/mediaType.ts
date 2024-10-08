@@ -1,14 +1,4 @@
-/**
- * Module variables.
- * @private
- */
-
-var simpleMediaTypeRegExp = /^\s*([^\s\/;]+)\/([^;\s]+)\s*(?:;(.*))?$/;
-
-/**
- * Parse the Accept header.
- * @private
- */
+const simpleMediaTypeRegExp = /^\s*([^\s\/;]+)\/([^;\s]+)\s*(?:;(.*))?$/;
 
 function parseAccept(accept: any) {
   var accepts = splitMediaTypes(accept);
@@ -274,3 +264,5 @@ function splitParameters(str: any) {
 
   return parameters;
 }
+
+export default preferredMediaTypes;

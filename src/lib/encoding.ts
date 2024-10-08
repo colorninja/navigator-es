@@ -1,8 +1,3 @@
-/**
- * Module variables.
- * @private
- */
-
 const simpleEncodingRegExp = /^\s*([^\s;]+)\s*(?:;(.*))?$/;
 
 /**
@@ -185,3 +180,5 @@ function getFullEncoding(spec: any) {
 function isQuality(spec: any) {
   return spec.q > 0;
 }
+
+export default preferredEncodings;

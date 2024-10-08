@@ -154,3 +154,5 @@ function getFullLanguage(spec: any) {
 function isQuality(spec: any) {
   return spec.q > 0;
 }
+
+export default preferredLanguages;
