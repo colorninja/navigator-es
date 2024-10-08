@@ -1,22 +1,4 @@
 /**
- * negotiator
- * Copyright(c) 2012 Isaac Z. Schlueter
- * Copyright(c) 2014 Federico Romero
- * Copyright(c) 2014-2015 Douglas Christopher Wilson
- * MIT Licensed
- */
-
-'use strict';
-
-/**
- * Module exports.
- * @public
- */
-
-module.exports = preferredMediaTypes;
-module.exports.preferredMediaTypes = preferredMediaTypes;
-
-/**
  * Module variables.
  * @private
  */
@@ -28,7 +10,7 @@ var simpleMediaTypeRegExp = /^\s*([^\s\/;]+)\/([^;\s]+)\s*(?:;(.*))?$/;
  * @private
  */
 
-function parseAccept(accept) {
+function parseAccept(accept: any) {
   var accepts = splitMediaTypes(accept);
 
   for (var i = 0, j = 0; i < accepts.length; i++) {
@@ -50,7 +32,7 @@ function parseAccept(accept) {
  * @private
  */
 
-function parseMediaType(str, i) {
+function parseMediaType(str: string, i?: number): any {
   var match = simpleMediaTypeRegExp.exec(str);
   if (!match) return null;
 
@@ -96,7 +78,7 @@ function parseMediaType(str, i) {
  * @private
  */
 
-function getMediaTypePriority(type, accepted, index) {
+function getMediaTypePriority(type: any, accepted: any[], index: number) {
   var priority = {o: -1, q: 0, s: 0};
 
   for (var i = 0; i < accepted.length; i++) {
@@ -115,7 +97,7 @@ function getMediaTypePriority(type, accepted, index) {
  * @private
  */
 
-function specify(type, spec, index) {
+function specify(type: string, spec: any, index: number) {
   var p = parseMediaType(type);
   var s = 0;
 
@@ -159,7 +141,7 @@ function specify(type, spec, index) {
  * @public
  */
 
-function preferredMediaTypes(accept, provided) {
+export function preferredMediaTypes(accept?: string, provided?: any[]) {
   // RFC 2616 sec 14.2: no header = */*
   var accepts = parseAccept(accept === undefined ? '*/*' : accept || '');
 
@@ -186,7 +168,7 @@ function preferredMediaTypes(accept, provided) {
  * @private
  */
 
-function compareSpecs(a, b) {
+function compareSpecs(a: any, b: any) {
   return (b.q - a.q) || (b.s - a.s) || (a.o - b.o) || (a.i - b.i) || 0;
 }
 
@@ -195,7 +177,7 @@ function compareSpecs(a, b) {
  * @private
  */
 
-function getFullType(spec) {
+function getFullType(spec: any) {
   return spec.type + '/' + spec.subtype;
 }
 
@@ -204,7 +186,7 @@ function getFullType(spec) {
  * @private
  */
 
-function isQuality(spec) {
+function isQuality(spec: any) {
   return spec.q > 0;
 }
 
@@ -213,7 +195,7 @@ function isQuality(spec) {
  * @private
  */
 
-function quoteCount(string) {
+function quoteCount(string: any) {
   var count = 0;
   var index = 0;
 
@@ -230,7 +212,7 @@ function quoteCount(string) {
  * @private
  */
 
-function splitKeyValuePair(str) {
+function splitKeyValuePair(str: any) {
   var index = str.indexOf('=');
   var key;
   var val;
@@ -250,7 +232,7 @@ function splitKeyValuePair(str) {
  * @private
  */
 
-function splitMediaTypes(accept) {
+function splitMediaTypes(accept: any) {
   var accepts = accept.split(',');
 
   for (var i = 1, j = 0; i < accepts.length; i++) {
@@ -272,7 +254,7 @@ function splitMediaTypes(accept) {
  * @private
  */
 
-function splitParameters(str) {
+function splitParameters(str: any) {
   var parameters = str.split(';');
 
   for (var i = 1, j = 0; i < parameters.length; i++) {

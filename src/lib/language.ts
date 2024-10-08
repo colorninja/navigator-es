@@ -1,34 +1,11 @@
-/**
- * negotiator
- * Copyright(c) 2012 Isaac Z. Schlueter
- * Copyright(c) 2014 Federico Romero
- * Copyright(c) 2014-2015 Douglas Christopher Wilson
- * MIT Licensed
- */
-
-'use strict';
-
-/**
- * Module exports.
- * @public
- */
-
-module.exports = preferredLanguages;
-module.exports.preferredLanguages = preferredLanguages;
-
-/**
- * Module variables.
- * @private
- */
-
-var simpleLanguageRegExp = /^\s*([^\s\-;]+)(?:-([^\s;]+))?\s*(?:;(.*))?$/;
+const simpleLanguageRegExp = /^\s*([^\s\-;]+)(?:-([^\s;]+))?\s*(?:;(.*))?$/;
 
 /**
  * Parse the Accept-Language header.
  * @private
  */
 
-function parseAcceptLanguage(accept) {
+function parseAcceptLanguage(accept?: any) {
   var accepts = accept.split(',');
 
   for (var i = 0, j = 0; i < accepts.length; i++) {
@@ -50,7 +27,7 @@ function parseAcceptLanguage(accept) {
  * @private
  */
 
-function parseLanguage(str, i) {
+function parseLanguage(str: string, i?: number) {
   var match = simpleLanguageRegExp.exec(str);
   if (!match) return null;
 
@@ -83,7 +60,7 @@ function parseLanguage(str, i) {
  * @private
  */
 
-function getLanguagePriority(language, accepted, index) {
+function getLanguagePriority(language: string, accepted: any[], index: number) {
   var priority = {o: -1, q: 0, s: 0};
 
   for (var i = 0; i < accepted.length; i++) {
@@ -102,7 +79,7 @@ function getLanguagePriority(language, accepted, index) {
  * @private
  */
 
-function specify(language, spec, index) {
+function specify(language: string, spec: any, index: number) {
   var p = parseLanguage(language)
   if (!p) return null;
   var s = 0;
@@ -122,14 +99,14 @@ function specify(language, spec, index) {
     q: spec.q,
     s: s
   }
-};
+}
 
 /**
  * Get the preferred languages from an Accept-Language header.
  * @public
  */
 
-function preferredLanguages(accept, provided) {
+export function preferredLanguages(accept?: string, provided?: any[]) {
   // RFC 2616 sec 14.4: no header = *
   var accepts = parseAcceptLanguage(accept === undefined ? '*' : accept || '');
 
@@ -156,7 +133,7 @@ function preferredLanguages(accept, provided) {
  * @private
  */
 
-function compareSpecs(a, b) {
+function compareSpecs(a: any, b: any) {
   return (b.q - a.q) || (b.s - a.s) || (a.o - b.o) || (a.i - b.i) || 0;
 }
 
@@ -165,7 +142,7 @@ function compareSpecs(a, b) {
  * @private
  */
 
-function getFullLanguage(spec) {
+function getFullLanguage(spec: any) {
   return spec.full;
 }
 
@@ -174,6 +151,6 @@ function getFullLanguage(spec) {
  * @private
  */
 
-function isQuality(spec) {
+function isQuality(spec: any) {
   return spec.q > 0;
 }

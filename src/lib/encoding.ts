@@ -1,36 +1,18 @@
 /**
- * negotiator
- * Copyright(c) 2012 Isaac Z. Schlueter
- * Copyright(c) 2014 Federico Romero
- * Copyright(c) 2014-2015 Douglas Christopher Wilson
- * MIT Licensed
- */
-
-'use strict';
-
-/**
- * Module exports.
- * @public
- */
-
-module.exports = preferredEncodings;
-module.exports.preferredEncodings = preferredEncodings;
-
-/**
  * Module variables.
  * @private
  */
 
-var simpleEncodingRegExp = /^\s*([^\s;]+)\s*(?:;(.*))?$/;
+const simpleEncodingRegExp = /^\s*([^\s;]+)\s*(?:;(.*))?$/;
 
 /**
  * Parse the Accept-Encoding header.
  * @private
  */
 
-function parseAcceptEncoding(accept) {
+function parseAcceptEncoding(accept?: any) {
   var accepts = accept.split(',');
-  var hasIdentity = false;
+  let hasIdentity: any = false;
   var minQuality = 1;
 
   for (var i = 0, j = 0; i < accepts.length; i++) {
@@ -66,7 +48,7 @@ function parseAcceptEncoding(accept) {
  * @private
  */
 
-function parseEncoding(str, i) {
+function parseEncoding(str: string, i: number) {
   var match = simpleEncodingRegExp.exec(str);
   if (!match) return null;
 
@@ -95,7 +77,7 @@ function parseEncoding(str, i) {
  * @private
  */
 
-function getEncodingPriority(encoding, accepted, index) {
+function getEncodingPriority(encoding: string, accepted: any[], index: number) {
   var priority = {encoding: encoding, o: -1, q: 0, s: 0};
 
   for (var i = 0; i < accepted.length; i++) {
@@ -114,7 +96,7 @@ function getEncodingPriority(encoding, accepted, index) {
  * @private
  */
 
-function specify(encoding, spec, index) {
+function specify(encoding: string, spec: any, index?: number) {
   var s = 0;
   if(spec.encoding.toLowerCase() === encoding.toLowerCase()){
     s |= 1;
@@ -129,17 +111,17 @@ function specify(encoding, spec, index) {
     q: spec.q,
     s: s
   }
-};
+}
 
 /**
  * Get the preferred encodings from an Accept-Encoding header.
  * @public
  */
 
-function preferredEncodings(accept, provided, preferred) {
+export function preferredEncodings(accept: string, provided?: string[], preferred?: any[]) {
   var accepts = parseAcceptEncoding(accept || '');
 
-  var comparator = preferred ? function comparator (a, b) {
+  var comparator = preferred ? function comparator (a: any, b: any) {
     if (a.q !== b.q) {
       return b.q - a.q // higher quality first
     }
@@ -182,7 +164,7 @@ function preferredEncodings(accept, provided, preferred) {
  * @private
  */
 
-function compareSpecs(a, b) {
+function compareSpecs(a: any, b: any) {
   return (b.q - a.q) || (b.s - a.s) || (a.o - b.o) || (a.i - b.i);
 }
 
@@ -191,7 +173,7 @@ function compareSpecs(a, b) {
  * @private
  */
 
-function getFullEncoding(spec) {
+function getFullEncoding(spec: any) {
   return spec.encoding;
 }
 
@@ -200,6 +182,6 @@ function getFullEncoding(spec) {
  * @private
  */
 
-function isQuality(spec) {
+function isQuality(spec: any) {
   return spec.q > 0;
 }
