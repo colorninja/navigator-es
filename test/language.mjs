@@ -1,6 +1,6 @@
 import {strict as assert} from 'node:assert';
 import {describe, it} from 'node:test';
-import {Negotiator} from '../dist/index.js';
+import {Negotiator} from '../dist/esm/index.js';
 
 describe('negotiator.language()', function () {
   whenAcceptLanguage(undefined, function (negotiator) {
@@ -403,7 +403,7 @@ describe('negotiator.languages(array)', function () {
 })
 
 function createRequest(headers) {
-  var request = {
+  const request = {
     headers: {}
   }
 
@@ -417,7 +417,7 @@ function createRequest(headers) {
 }
 
 function whenAcceptLanguage(acceptLanguage, func) {
-  var description = !acceptLanguage
+  const description = !acceptLanguage
     ? 'when no Accept-Language'
     : 'when Accept-Language: ' + acceptLanguage
 

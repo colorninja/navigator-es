@@ -1,6 +1,6 @@
 import {strict as assert} from 'node:assert';
 import {describe, it} from 'node:test';
-import {Negotiator} from '../dist/index.js';
+import {Negotiator} from '../dist/esm/index.js';
 
 describe('negotiator.mediaType()', function () {
   whenAccept(undefined, function (negotiator) {
@@ -502,7 +502,7 @@ describe('negotiator.mediaTypes(array)', function () {
 })
 
 function createRequest(headers) {
-  var request = {
+  const request = {
     headers: {}
   }
 
@@ -528,7 +528,7 @@ function mediaTypesPreferred(negotiator, preferredTypes) {
 }
 
 function whenAccept(accept, func) {
-  var description = !accept
+  const description = !accept
     ? 'when no Accept'
     : 'when Accept: ' + accept
 

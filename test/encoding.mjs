@@ -1,6 +1,6 @@
 import {strict as assert} from 'node:assert';
 import {describe, it} from 'node:test';
-import {Negotiator} from '../dist/index.js';
+import {Negotiator} from '../dist/esm/index.js';
 
 describe('negotiator.encoding()', function () {
   whenAcceptEncoding(undefined, function (negotiator) {
@@ -448,7 +448,7 @@ describe('negotiator.encodings(array)', function () {
 })
 
 function createRequest(headers) {
-  var request = {
+  const request = {
     headers: {}
   }
 
@@ -462,7 +462,7 @@ function createRequest(headers) {
 }
 
 function whenAcceptEncoding(acceptEncoding, func) {
-  var description = !acceptEncoding
+  const description = !acceptEncoding
     ? 'when no Accept-Encoding'
     : 'when Accept-Encoding: ' + acceptEncoding
 

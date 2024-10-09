@@ -1,6 +1,6 @@
 import {strict as assert} from 'node:assert';
 import {describe, it} from 'node:test';
-import {Negotiator} from '../dist/index.js';
+import {Negotiator} from '../dist/esm/index.js';
 
 describe('negotiator.charset()', function () {
   whenAcceptCharset(undefined, function (negotiator) {
@@ -307,7 +307,7 @@ describe('negotiator.charsets(array)', function () {
 })
 
 function createRequest(headers) {
-  var request = {
+  const request = {
     headers: {}
   }
 
@@ -321,7 +321,7 @@ function createRequest(headers) {
 }
 
 function whenAcceptCharset(acceptCharset, func) {
-  var description = !acceptCharset
+  const description = !acceptCharset
     ? 'when no Accept-Charset'
     : 'when Accept-Charset: ' + acceptCharset
 
