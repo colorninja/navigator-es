@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "outDir": "./dist/esm",
+    "outDir": "./dist",
     "rootDir": "src",
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
+    "moduleResolution": "Node",
+    "module": "ES6",
     "declaration": true,
     "strict": true,
     /* Additional Checks */
